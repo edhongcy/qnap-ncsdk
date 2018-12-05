@@ -1,5 +1,5 @@
 FROM bobthesheep/ncsdk_container
-MAINTAINER ED Hong(edhong@qnap.com)
+MAINTAINER ED Hong(edhongcy@gmail.com)
 
 USER root
 VOLUME ["/dev/bus/usb:/dev/bus/usb:shared"]
