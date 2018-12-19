@@ -1,23 +1,20 @@
 FROM ubuntu:16.04
-MAINTAINER ED Hong(edhongcy@gmail.com)
+LABEL maintainer="edhongcy@gmail.com"
 
 USER root
 VOLUME ["/dev/bus/usb:/dev/bus/usb:shared"]
 
 RUN apt-get update \
     && apt-get upgrade -y \
-    && apt-get install -y build-essential git lsb-release sudo udev usbutils wget libtool apt-utils \
+    && apt-get install -y build-essential git lsb-release sudo udev usbutils wget libtool apt-utils pyhton3-pip \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
-
-#ARM model no tensorflow
-
-COPY tensorflow-1.4.0-cp35-cp35m-linux_armv7l.whl /root/
-RUN pip3 install /root/tensorflow-1.4.0-cp35-cp35m-linux_armv7l.whl
 
 #Build movidius
 
 WORKDIR /root
+RUN wget https://github.com/lhelontra/tensorflow-on-arm/releases/download/v1.4.0/tensorflow-1.4.0-cp35-none-linux_armv7l.whl
+RUN pip3 install /root/tensorflow-1.4.0-cp35-none-linux_armv7l.whl
 RUN git clone https://github.com/HanYangZhao/ncsdk.git
 WORKDIR /root/ncsdk
 RUN make install
